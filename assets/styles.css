@@ -598,6 +598,92 @@ img { max-width: 100%; display: block; }
   line-height: 1.75;
   max-width: var(--measure);
 }
+.learning-note-block {
+  margin-top: var(--sp-3);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--line);
+}
+.learning-block-title {
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+.learning-highlights {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 24px;
+}
+.learning-highlights li {
+  position: relative;
+  padding-left: 16px;
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
+.learning-highlights li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.72em;
+  width: 5px;
+  height: 1px;
+  background: var(--accent);
+}
+.learning-section-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.learning-section {
+  padding: var(--sp-2);
+  background: var(--bg);
+}
+.learning-section h5 {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.learning-section p {
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+  line-height: 1.75;
+}
+.learning-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(180px, 0.6fr);
+  gap: 12px;
+  align-items: start;
+}
+.learning-shot {
+  margin: 0;
+  border: 1px solid var(--line);
+  background: var(--bg-alt);
+}
+.learning-shot-link {
+  display: block;
+  overflow: hidden;
+}
+.learning-shot img {
+  width: 100%;
+  height: auto;
+  transition: opacity 160ms ease;
+}
+.learning-shot-link:hover img { opacity: 0.88; }
+.learning-shot figcaption {
+  padding: 8px 10px 10px;
+  border-top: 1px solid var(--line);
+  color: var(--text-3);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.6;
+}
 .rc-links {
   display: flex; flex-wrap: wrap; gap: 8px;
   margin-top: 12px;
@@ -632,6 +718,9 @@ img { max-width: 100%; display: block; }
 @media (max-width: 640px) {
   .learning-card { grid-template-columns: 1fr; }
   .rc-index { display: none; }
+  .learning-highlights,
+  .learning-section-grid,
+  .learning-gallery { grid-template-columns: 1fr; }
 }
 
 /* 空状态 */

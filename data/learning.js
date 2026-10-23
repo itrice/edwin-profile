@@ -2,7 +2,7 @@
    学习研究数据
    --------------------------------------------------------------------------
    学习笔记、架构复盘、技术分享、阅读记录等统一放在 LEARNING 数组。
-   当前内容均为界面测试示例，isExample 为 true 时页面会显示“示例”标记。
+   页面会按 date 倒序展示；标题、摘要和标签应使用真实内容。
 
    字段说明：
      id         唯一标识（英文 kebab-case）
@@ -14,73 +14,60 @@
      summary    摘要
      tags       标签数组（可选）
      links      链接数组 [{ label, url }]（可选）
-     isExample  是否测试示例
+     highlights 关键收获字符串数组（可选）
+     sections   分段笔记 [{ title, body }]（可选）
+     screenshots 截图数组 [{ src, alt, caption, width, height }]（可选）
+     isExample  是否为界面测试数据（正式内容应省略）
    ========================================================================== */
 
 const LEARNING = [
   {
-    id: "microservice-boundaries",
-    title: "从单体到微服务的边界划分：学习笔记",
+    id: "codex-deep-use-profile-site",
+    title: "深度使用 Codex 并完善个人网站",
     type: "学习笔记",
-    date: "2026-10-23",
-    venue: "架构学习",
+    date: "2026-10-22",
+    venue: "Codex 实践",
     authors: ["安仕平"],
-    summary: "这是一条用于验证学习研究列表的学习笔记示例，围绕领域边界、数据归属、服务契约与迁移顺序整理观察点，不代表正式发布内容。",
-    tags: ["示例", "微服务", "领域边界"],
-    links: [{ label: "示例详情", url: "#learning" }],
-    isExample: true
-  },
-  {
-    id: "legacy-refactor-checklist",
-    title: "旧系统渐进式重构的取舍清单",
-    type: "架构复盘",
-    date: "2026-10-18",
-    venue: "项目复盘",
-    authors: ["安仕平"],
-    summary: "用于测试长标题和复盘卡片的示例内容，记录兼容性、灰度切换、回滚机制和团队协作四个维度的检查思路，之后可替换为真实复盘。",
-    tags: ["示例", "架构", "重构"],
-    links: [{ label: "查看提纲", url: "#learning" }],
-    isExample: true
-  },
-  {
-    id: "quality-gates",
-    title: "CI/CD 流水线中的关键质量门禁",
-    type: "技术分享",
-    date: "2026-09-30",
-    venue: "团队分享",
-    summary: "这是一条技术分享示例，用于检查类型徽章、作者、来源与标签的组合展示，内容聚焦编译、测试、代码扫描和发布审批。",
-    tags: ["示例", "DevOps", "CI/CD"],
-    isExample: true
-  },
-  {
-    id: "cloud-native-tooling",
-    title: "云原生交付工具链阅读记录",
-    type: "开源实践",
-    date: "2026-09-12",
-    venue: "开源学习",
-    summary: "用于验证不带链接的卡片布局，记录 Kubernetes、Helm 与 ArgoCD 文档的阅读顺序，并整理配置管理和发布流程中的关注点。",
-    tags: ["示例", "K8s", "ArgoCD"],
-    isExample: true
-  },
-  {
-    id: "ddia-reading-notes",
-    title: "《设计数据密集型应用》阅读提纲",
-    type: "读书笔记",
-    date: "2026-08-26",
-    venue: "技术阅读",
-    summary: "读书笔记测试示例，用于检查较长摘要、不同日期和读书类筛选条件，围绕可靠性、可扩展性与可维护性整理问题清单。",
-    tags: ["示例", "数据系统", "阅读"],
-    links: [{ label: "阅读入口", url: "#learning" }],
-    isExample: true
-  },
-  {
-    id: "api-latency-analysis",
-    title: "API 响应时间定位方法：测试示例",
-    type: "学习笔记",
-    date: "2026-08-08",
-    venue: "性能学习",
-    summary: "最后一条学习笔记示例，用于验证同类型多条数据和默认倒序排列，内容将请求链路、数据库耗时与缓存命中作为排查切入口。",
-    tags: ["示例", "性能", "API"],
-    isExample: true
+    summary: "把 Codex 从代码问答工具进一步用于完整的前端维护流程：先理解现有静态站结构，再迁移内容数据、完成隐私脱敏和兼容性修复，最后通过桌面端与移动端实际渲染回归，形成可重复的实践闭环。",
+    highlights: [
+      "页面文案、个人信息、技能与学习研究统一迁移到 data 目录，建立单一数据源。",
+      "电话只保留脱敏值，并增加内容校验脚本拦截未脱敏号码和危险链接。",
+      "修复导航锚点、当前区块语义、经历动画和目标浏览器 CSS 降级问题。",
+      "在 1440×900 与 375×667 视口完成布局、交互和控制台回归。"
+    ],
+    sections: [
+      {
+        title: "学习目标",
+        body: "验证 Codex 能否在真实项目中承担代码审查、数据迁移、问题定位和浏览器回归，而不只是生成局部代码片段。"
+      },
+      {
+        title: "实践路径",
+        body: "先梳理 PRD、HTML、样式和数据结构，再按隐私、兼容性、可访问性和可维护性分级处理；每轮修改后运行结构与内容检查，并在浏览器中复核页面。"
+      },
+      {
+        title: "验证结果",
+        body: "桌面端和移动端均无横向溢出，主要渲染容器完整，导航与锚点状态正确，控制台无错误；随后将检查流程固化为可重复执行的脚本。"
+      }
+    ],
+    screenshots: [
+      {
+        src: "assets/learning/site-desktop.png",
+        alt: "桌面端个人主页首屏截图",
+        caption: "桌面端首屏：保留白纸风格，同时验证信息层级与 CTA 布局。",
+        width: 1425,
+        height: 891
+      },
+      {
+        src: "assets/learning/site-mobile.png",
+        alt: "移动端个人主页首屏截图",
+        caption: "移动端 375×667：检查导航收缩、正文换行和按钮可见性。",
+        width: 360,
+        height: 640
+      }
+    ],
+    tags: ["Codex", "AI 辅助开发", "个人网站", "工程实践"],
+    links: [
+      { label: "查看结构化数据", url: "#learning" }
+    ]
   }
 ];

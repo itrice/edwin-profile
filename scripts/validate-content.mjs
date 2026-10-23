@@ -114,6 +114,34 @@ for (const item of learning) {
   for (const link of item.links ?? []) {
     if (link.url) dataUrls.push(link.url);
   }
+  if (item.highlights != null) {
+    assert(Array.isArray(item.highlights), `学习研究 ${item.id} 的 highlights 必须是数组`);
+  }
+  if (item.sections != null) {
+    assert(Array.isArray(item.sections), `学习研究 ${item.id} 的 sections 必须是数组`);
+    for (const section of item.sections) {
+      assert(section.title && section.body, `学习研究 ${item.id} 的分段笔记缺少标题或正文`);
+    }
+  }
+  if (item.screenshots != null) {
+    assert(Array.isArray(item.screenshots), `学习研究 ${item.id} 的 screenshots 必须是数组`);
+    for (const screenshot of item.screenshots) {
+      assert(screenshot.src && screenshot.alt, `学习研究 ${item.id} 的截图缺少 src 或 alt`);
+      assert(
+        /^assets\/learning\/[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(screenshot.src) &&
+          !screenshot.src.includes(".."),
+        `学习研究 ${item.id} 的截图路径不安全`
+      );
+      assert(
+        existsSync(resolve(root, screenshot.src)),
+        `学习研究 ${item.id} 的截图不存在：${screenshot.src}`
+      );
+      assert(
+        Number.isInteger(screenshot.width) && Number.isInteger(screenshot.height),
+        `学习研究 ${item.id} 的截图需要整数 width/height`
+      );
+    }
+  }
 }
 for (const link of site.navLinks) dataUrls.push(link.href);
 
@@ -124,11 +152,10 @@ assert(
 unique(experience.map((job) => job.id), "工作经历 ID");
 unique(learning.map((item) => item.id), "学习研究 ID");
 unique(skills.map((group) => group.title), "技术能力分组标题");
-assert(learning.length >= 5, "学习研究测试数据至少需要 5 条，才能覆盖筛选器");
-assert(new Set(learning.map((item) => item.type)).size > 1, "学习研究测试数据需要包含多个类型");
+assert(learning.length > 0, "学习研究数据不能为空");
 assert(
-  learning.every((item) => item.isExample === true),
-  "测试阶段的学习研究条目必须标记 isExample: true"
+  learning.every((item) => item.isExample !== true),
+  "正式学习记录不应标记为测试示例"
 );
 
 const html = source["index.html"];

@@ -16,6 +16,7 @@
 | [index.html](index.html) | 单页主页语义结构与渲染容器 |
 | [assets/styles.css](assets/styles.css) | 全部样式与设计 token |
 | [assets/main.js](assets/main.js) | 数据渲染、导航、滚动进度、筛选与动画 |
+| [assets/learning/](assets/learning/) | 学习研究截图；点击缩略图可查看原图 |
 | [data/profile.js](data/profile.js) | 个人信息、职业理念、联系方式与 SEO 字段 |
 | [data/experience.js](data/experience.js) | 工作经历 |
 | [data/skills.js](data/skills.js) | 技术能力分组 |
@@ -119,6 +120,21 @@ const PROFILE = {
   authors: ["安仕平"],
   summary: "50–120 字摘要。",
   tags: ["架构", "微服务"],
+  highlights: ["关键收获一", "关键收获二"],
+  sections: [
+    { title: "学习目标", body: "这一段学习要解决的问题。" },
+    { title: "实践过程", body: "实施步骤与关键判断。" },
+    { title: "验证结果", body: "测试数据和最终结论。" }
+  ],
+  screenshots: [
+    {
+      src: "assets/learning/example.png",
+      alt: "截图的替代文本",
+      caption: "截图说明",
+      width: 1440,
+      height: 900
+    }
+  ],
   links: [{ label: "阅读", url: "https://example.com" }]
 }
 ```
@@ -126,6 +142,8 @@ const PROFILE = {
 页面按日期倒序排列。条目不少于 5 条且类型多于 1 个时显示类型筛选器，因此当前 1 条记录不会显示筛选器；数组为空时自动显示整理中状态，首屏主 CTA 也会改为“查看工作经历”。
 
 当前文件已加入 2026-10-22 的 Codex 实践学习记录。正式内容不应设置 `isExample: true`，内容校验会拒绝带该标记的正式数据；如需临时造数，应同时调整校验规则，并在上线前移除测试记录。
+
+学习笔记支持 `highlights`、分段正文 `sections` 和 `screenshots`。截图必须放在 `assets/learning/`，提供 `alt`、说明及原始宽高；页面会延迟加载缩略图，点击后在新标签页打开原图。
 
 ### 导航与页面文案
 
@@ -145,7 +163,7 @@ const PROFILE = {
 node scripts/validate-content.mjs
 ```
 
-检查包括数据文件可执行性、必填字段、ID 唯一性、URL 协议、电话号码脱敏和学习研究日期格式。
+检查包括数据文件可执行性、必填字段、ID 唯一性、URL 协议、电话号码脱敏、学习研究日期格式，以及截图路径、替代文本和原图是否存在。
 
 ## 状态
 
@@ -154,6 +172,7 @@ node scripts/validate-content.mjs
 - ✅ 电话号码脱敏
 - ✅ 导航兼容性、当前区块语义和经历动画修复
 - ✅ 学习研究列表、类型筛选逻辑与 1 条 Codex 实践学习记录
+- ✅ 学习研究支持关键收获、分段笔记和可点击截图画廊
 - ⬜ 后续学习研究内容
 - ⬜ 头像照片（可选）
 - ⬜ 部署与域名

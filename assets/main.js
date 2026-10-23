@@ -348,6 +348,12 @@
     return String(date).replace(/-/g, '.');
   }
 
+  function isSafeLearningImage(src) {
+    return typeof src === 'string' &&
+      !src.includes('..') &&
+      /^assets\/learning\/[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(src);
+  }
+
   function buildCard(item, index) {
     var card = el('article', 'learning-card');
     if (item.id) card.id = 'learning-' + item.id;
@@ -367,6 +373,72 @@
       ? item.authors.join('，')
       : item.authors;
     if (authors) main.appendChild(el('p', 'rc-date', authors));
+
+    if (Array.isArray(item.highlights) && item.highlights.length) {
+      var highlights = el('section', 'learning-note-block');
+      highlights.appendChild(el('h4', 'learning-block-title', '关键收获'));
+      var highlightList = el('ul', 'learning-highlights');
+      item.highlights.forEach(function (highlight) {
+        highlightList.appendChild(el('li', null, highlight));
+      });
+      highlights.appendChild(highlightList);
+      main.appendChild(highlights);
+    }
+
+    if (Array.isArray(item.sections) && item.sections.length) {
+      var noteSections = el('section', 'learning-note-block');
+      noteSections.appendChild(el('h4', 'learning-block-title', '学习笔记'));
+      var sectionGrid = el('div', 'learning-section-grid');
+      item.sections.forEach(function (section) {
+        if (!section || !section.title || !section.body) return;
+        var sectionEl = el('div', 'learning-section');
+        sectionEl.appendChild(el('h5', null, section.title));
+        sectionEl.appendChild(el('p', null, section.body));
+        sectionGrid.appendChild(sectionEl);
+      });
+      if (sectionGrid.childNodes.length) noteSections.appendChild(sectionGrid);
+      main.appendChild(noteSections);
+    }
+
+    if (Array.isArray(item.screenshots) && item.screenshots.length) {
+      var gallery = el('section', 'learning-note-block');
+      gallery.appendChild(el(
+        'h4',
+        'learning-block-title',
+        '过程截图 · ' + item.screenshots.length
+      ));
+      var galleryGrid = el('div', 'learning-gallery');
+      item.screenshots.forEach(function (screenshot) {
+        if (!screenshot || !isSafeLearningImage(screenshot.src)) return;
+        var figure = el('figure', 'learning-shot');
+        var link = el('a', 'learning-shot-link');
+        link.href = screenshot.src;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute(
+          'aria-label',
+          '打开原图：' + (screenshot.caption || screenshot.alt || '学习研究截图')
+        );
+
+        var image = document.createElement('img');
+        image.src = screenshot.src;
+        image.alt = screenshot.alt || '';
+        image.loading = 'lazy';
+        image.decoding = 'async';
+        if (screenshot.width) image.width = screenshot.width;
+        if (screenshot.height) image.height = screenshot.height;
+        link.appendChild(image);
+        figure.appendChild(link);
+        if (screenshot.caption) {
+          figure.appendChild(el('figcaption', null, screenshot.caption));
+        }
+        galleryGrid.appendChild(figure);
+      });
+      if (galleryGrid.childNodes.length) {
+        gallery.appendChild(galleryGrid);
+        main.appendChild(gallery);
+      }
+    }
 
     if (Array.isArray(item.tags) && item.tags.length) {
       var tags = el('div', 'rc-tags');
