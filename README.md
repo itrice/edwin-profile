@@ -19,7 +19,7 @@
 | [data/profile.js](data/profile.js) | 个人信息、职业理念、联系方式与 SEO 字段 |
 | [data/experience.js](data/experience.js) | 工作经历 |
 | [data/skills.js](data/skills.js) | 技术能力分组 |
-| [data/research.js](data/research.js) | 研究成果 |
+| [data/learning.js](data/learning.js) | 学习研究，当前包含带标记的测试示例 |
 | [data/site.js](data/site.js) | 导航、区块文案、CTA、空状态与页脚文案 |
 
 网站保留零构建、零运行时依赖的静态架构。所有可维护内容均位于 `data/`，HTML 只保留语义结构，脚本负责把数据渲染到页面。
@@ -104,25 +104,28 @@ const PROFILE = {
 
 编辑 [data/skills.js](data/skills.js) 的 `SKILL_GROUPS`。每个分组包含 `title` 和 `items` 字符串数组，页面会按数组顺序渲染为标签云。
 
-### 研究成果
+### 学习研究
 
-编辑 [data/research.js](data/research.js)，在 `RESEARCH` 数组中追加条目：
+编辑 [data/learning.js](data/learning.js)，在 `LEARNING` 数组中追加条目：
 
 ```js
 {
   id: "microservice-migration",
   title: "十年单体系统的微服务迁移实践",
-  type: "技术文章",
+  type: "学习笔记",
   date: "2026-10",
-  venue: "CSDN",
+  venue: "架构学习",
   authors: ["安仕平"],
   summary: "50–120 字摘要。",
   tags: ["架构", "微服务"],
-  links: [{ label: "阅读", url: "https://example.com" }]
+  links: [{ label: "阅读", url: "https://example.com" }],
+  isExample: false
 }
 ```
 
 页面按日期倒序排列。条目不少于 5 条且类型多于 1 个时显示类型筛选器；数组为空时自动显示整理中状态，首屏主 CTA 也会改为“查看工作经历”。
+
+当前文件中的 6 条内容均为界面测试示例，并通过 `isExample: true` 在页面显示说明和“示例”徽章。替换为正式内容时将 `isExample` 设为 `false` 或删除该字段。
 
 ### 导航与页面文案
 
@@ -131,7 +134,7 @@ const PROFILE = {
 - 导航链接及移动端隐藏项。
 - 首屏状态与 CTA。
 - 各区块编号、标题和说明。
-- 研究成果空状态。
+- 学习研究示例提示与空状态。
 - 页脚标题与构建说明。
 
 ## 内容检查
@@ -142,15 +145,16 @@ const PROFILE = {
 node scripts/validate-content.mjs
 ```
 
-检查包括数据文件可执行性、必填字段、ID 唯一性、URL 协议、电话号码脱敏和研究日期格式。
+检查包括数据文件可执行性、必填字段、ID 唯一性、URL 协议、电话号码脱敏和学习研究日期格式。
 
 ## 状态
 
-- ✅ 网站开发完成（响应式 + 深色模式 + 研究成果容器）
-- ✅ 个人信息、经历、技能、研究成果与页面文案结构化
+- ✅ 网站开发完成（响应式 + 深色模式 + 学习研究容器）
+- ✅ 个人信息、经历、技能、学习研究与页面文案结构化
 - ✅ 电话号码脱敏
 - ✅ 导航兼容性、当前区块语义和经历动画修复
-- ⬜ 研究成果内容
+- ✅ 学习研究列表、类型筛选与 6 条测试示例
+- ⬜ 正式学习研究内容
 - ⬜ 头像照片（可选）
 - ⬜ 部署与域名
 

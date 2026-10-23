@@ -18,11 +18,11 @@
   var jobs = typeof EXPERIENCE !== 'undefined' && Array.isArray(EXPERIENCE)
     ? EXPERIENCE.slice()
     : [];
-  var researchItems = typeof RESEARCH !== 'undefined' && Array.isArray(RESEARCH)
-    ? RESEARCH.slice()
+  var learningItems = typeof LEARNING !== 'undefined' && Array.isArray(LEARNING)
+    ? LEARNING.slice()
     : [];
 
-  researchItems.sort(function (a, b) {
+  learningItems.sort(function (a, b) {
     return String(b.date || '').localeCompare(String(a.date || ''));
   });
 
@@ -118,10 +118,10 @@
       });
     }
 
-    var empty = site.researchEmpty || {};
-    setText('researchEmptyStatus', empty.status);
-    setText('researchEmptyTitle', empty.title);
-    setText('researchEmptyDescription', empty.description);
+    var empty = site.learningEmpty || {};
+    setText('learningEmptyStatus', empty.status);
+    setText('learningEmptyTitle', empty.title);
+    setText('learningEmptyDescription', empty.description);
 
     setText('footerContactTitle', site.footer && site.footer.contactTitle);
     setText('footerBuiltWith', site.footer && site.footer.builtWith);
@@ -229,10 +229,10 @@
 
     var primary = document.getElementById('heroPrimaryCta');
     var secondary = document.getElementById('heroSecondaryCta');
-    var primaryCta = researchItems.length
+    var primaryCta = learningItems.length
       ? site && site.hero && site.hero.primaryCta
       : site && site.hero && site.hero.primaryFallbackCta;
-    var secondaryCta = researchItems.length
+    var secondaryCta = learningItems.length
       ? site && site.hero && site.hero.secondaryCta
       : site && site.hero && site.hero.secondaryFallbackCta;
 
@@ -349,12 +349,13 @@
   }
 
   function buildCard(item, index) {
-    var card = el('article', 'research-card');
-    if (item.id) card.id = 'research-' + item.id;
+    var card = el('article', 'learning-card');
+    if (item.id) card.id = 'learning-' + item.id;
 
     var main = el('div', 'rc-main');
     var meta = el('div', 'rc-meta');
     if (item.type) meta.appendChild(el('span', 'rc-type', item.type));
+    if (item.isExample) meta.appendChild(el('span', 'rc-sample', '示例'));
     if (item.date) meta.appendChild(el('span', 'rc-date', dateLabel(item.date)));
     if (item.venue) meta.appendChild(el('span', 'rc-venue', item.venue));
     main.appendChild(meta);
@@ -391,13 +392,13 @@
     return card;
   }
 
-  function renderResearch(filterType) {
-    var list = document.getElementById('researchList');
-    var empty = document.getElementById('researchEmpty');
-    var toolbar = document.getElementById('researchToolbar');
+  function renderLearning(filterType) {
+    var list = document.getElementById('learningList');
+    var empty = document.getElementById('learningEmpty');
+    var toolbar = document.getElementById('learningToolbar');
     if (!list) return;
 
-    var shown = researchItems.filter(function (item) {
+    var shown = learningItems.filter(function (item) {
       return !filterType || filterType === '全部' || item.type === filterType;
     });
 
@@ -406,16 +407,16 @@
       list.appendChild(buildCard(item, index));
     });
     list.hidden = shown.length === 0;
-    if (empty) empty.hidden = researchItems.length !== 0;
-    if (researchItems.length === 0 && toolbar) toolbar.hidden = true;
+    if (empty) empty.hidden = learningItems.length !== 0;
+    if (learningItems.length === 0 && toolbar) toolbar.hidden = true;
   }
 
-  function renderResearchToolbar() {
-    var toolbar = document.getElementById('researchToolbar');
-    if (!toolbar || researchItems.length < 5) return;
+  function renderLearningToolbar() {
+    var toolbar = document.getElementById('learningToolbar');
+    if (!toolbar || learningItems.length < 5) return;
 
     var types = [];
-    researchItems.forEach(function (item) {
+    learningItems.forEach(function (item) {
       if (item.type && types.indexOf(item.type) === -1) types.push(item.type);
     });
     if (types.length <= 1) return;
@@ -436,11 +437,25 @@
         });
         button.classList.add('is-active');
         button.setAttribute('aria-pressed', 'true');
-        renderResearch(type);
+        renderLearning(type);
       });
       toolbar.appendChild(button);
     });
     toolbar.hidden = false;
+  }
+
+  function renderLearningSampleNotice() {
+    var notice = document.getElementById('learningSampleNotice');
+    if (!notice) return;
+    var hasExamples = learningItems.some(function (item) {
+      return item.isExample === true;
+    });
+    if (hasExamples && site && site.learningSampleNotice) {
+      notice.textContent = site.learningSampleNotice;
+      notice.hidden = false;
+    } else {
+      notice.hidden = true;
+    }
   }
 
   var observer = null;
@@ -566,8 +581,9 @@
   renderSite();
   renderProfile(profile);
   renderExperience();
-  renderResearch();
-  renderResearchToolbar();
+  renderLearning();
+  renderLearningToolbar();
+  renderLearningSampleNotice();
   restoreHashTarget();
   initScrollNavigation();
   initReveal();

@@ -504,8 +504,17 @@ img { max-width: 100%; display: block; }
 }
 .skill-tags span:hover { border-color: var(--accent); }
 
-/* ---------- Research ---------- */
-.research-toolbar {
+/* ---------- Learning ---------- */
+.learning-demo-note {
+  margin-bottom: var(--sp-2);
+  padding: 10px 12px;
+  border-left: 2px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text-2);
+  font-size: var(--fs-sm);
+}
+
+.learning-toolbar {
   display: flex; align-items: center; gap: 8px;
   flex-wrap: wrap;
   margin-bottom: var(--sp-4);
@@ -529,13 +538,13 @@ img { max-width: 100%; display: block; }
   color: var(--bg);
 }
 
-.research-list {
+.learning-list {
   display: grid;
   gap: 1px;
   background: var(--line);
   border: 1px solid var(--line);
 }
-.research-card {
+.learning-card {
   background: var(--bg);
   padding: var(--sp-3);
   transition: background-color 160ms ease;
@@ -544,7 +553,7 @@ img { max-width: 100%; display: block; }
   gap: var(--sp-3);
   align-items: start;
 }
-.research-card:hover { background: var(--bg-alt); }
+.learning-card:hover { background: var(--bg-alt); }
 .rc-main { min-width: 0; }
 .rc-meta {
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
@@ -561,6 +570,15 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-sm);
   padding: 1px 7px;
   background: var(--accent-soft);
+}
+.rc-sample {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  padding: 1px 7px;
 }
 .rc-date, .rc-venue {
   font-family: var(--font-mono);
@@ -612,20 +630,20 @@ img { max-width: 100%; display: block; }
   padding-top: 2px;
 }
 @media (max-width: 640px) {
-  .research-card { grid-template-columns: 1fr; }
+  .learning-card { grid-template-columns: 1fr; }
   .rc-index { display: none; }
 }
 
 /* 空状态 */
-.research-empty {
+.learning-empty {
   border: 1px solid var(--line);
   padding: var(--sp-6) var(--sp-3);
   text-align: center;
   background: var(--bg-alt);
 }
-.research-empty .mono { display: block; margin-bottom: 10px; }
-.research-empty h3 { font-size: var(--fs-lg); margin-bottom: 8px; }
-.research-empty p { color: var(--text-2); font-size: var(--fs-sm); max-width: 46ch; margin: 0 auto; }
+.learning-empty .mono { display: block; margin-bottom: 10px; }
+.learning-empty h3 { font-size: var(--fs-lg); margin-bottom: 8px; }
+.learning-empty p { color: var(--text-2); font-size: var(--fs-sm); max-width: 46ch; margin: 0 auto; }
 
 /* ---------- Footer ---------- */
 .footer {

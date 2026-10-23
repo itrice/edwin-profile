@@ -10,13 +10,13 @@ const SITE = {
     { label: "关于", href: "#about" },
     { label: "经历", href: "#experience" },
     { label: "能力", href: "#skills", className: "opt" },
-    { label: "研究", href: "#research" },
+    { label: "学习", href: "#learning" },
     { label: "联系", href: "#contact" }
   ],
 
   hero: {
-    status: "AVAILABLE FOR ARCHITECTURE & RESEARCH",
-    primaryCta: { label: "查看研究成果", href: "#research" },
+    status: "AVAILABLE FOR ARCHITECTURE & COLLABORATION",
+    primaryCta: { label: "查看学习研究", href: "#learning" },
     primaryFallbackCta: { label: "查看工作经历", href: "#experience" },
     secondaryCta: { label: "工作经历", href: "#experience" },
     secondaryFallbackCta: { label: "技术能力", href: "#skills" },
@@ -39,18 +39,20 @@ const SITE = {
       title: "技术能力",
       description: "按领域划分的主要技术栈。"
     },
-    research: {
+    learning: {
       number: "04",
-      title: "研究成果",
-      description: "论文、专利、开源项目与技术沉淀。"
+      title: "学习研究",
+      description: "学习笔记、架构复盘、技术分享与阅读记录。"
     }
   },
 
-  researchEmpty: {
+  learningEmpty: {
     status: "STATUS — IN PREPARATION",
-    title: "研究成果整理中",
-    description: "论文、专利与开源项目将在后续陆续补充到这里。"
+    title: "学习研究整理中",
+    description: "学习笔记与技术复盘将在后续陆续补充到这里。"
   },
+
+  learningSampleNotice: "以下为界面测试示例，不代表正式学习成果；上线前可替换为真实内容或清空数据。",
 
   footer: {
     contactTitle: "联系方式",

@@ -42,7 +42,7 @@ const sourceFiles = [
   "assets/styles.css",
   "data/profile.js",
   "data/experience.js",
-  "data/research.js",
+  "data/learning.js",
   "data/site.js",
   "data/skills.js"
 ];
@@ -73,13 +73,13 @@ for (const [file, content] of Object.entries(source)) {
 
 const profileContext = loadData("data/profile.js");
 const experienceContext = loadData("data/experience.js");
-const researchContext = loadData("data/research.js");
+const learningContext = loadData("data/learning.js");
 const siteContext = loadData("data/site.js");
 const skillsContext = loadData("data/skills.js");
 
 const profile = vm.runInContext("PROFILE", profileContext);
 const experience = vm.runInContext("EXPERIENCE", experienceContext);
-const research = vm.runInContext("RESEARCH", researchContext);
+const learning = vm.runInContext("LEARNING", learningContext);
 const site = vm.runInContext("SITE", siteContext);
 const skills = vm.runInContext("SKILL_GROUPS", skillsContext);
 
@@ -105,11 +105,11 @@ for (const link of profile.contact?.links ?? []) {
 for (const job of experience) {
   assert(job.id && job.title && job.start, "工作经历缺少 id/title/start");
 }
-for (const item of research) {
-  assert(item.id && item.title && item.type && item.date, "研究成果缺少 id/title/type/date");
+for (const item of learning) {
+  assert(item.id && item.title && item.type && item.date, "学习研究缺少 id/title/type/date");
   assert(
     /^\d{4}-\d{2}(?:-\d{2})?$/.test(item.date),
-    `研究成果 ${item.id} 的日期格式无效`
+    `学习研究 ${item.id} 的日期格式无效`
   );
   for (const link of item.links ?? []) {
     if (link.url) dataUrls.push(link.url);
@@ -122,8 +122,14 @@ assert(
   "数据中存在不安全的 URL 协议"
 );
 unique(experience.map((job) => job.id), "工作经历 ID");
-unique(research.map((item) => item.id), "研究成果 ID");
+unique(learning.map((item) => item.id), "学习研究 ID");
 unique(skills.map((group) => group.title), "技术能力分组标题");
+assert(learning.length >= 5, "学习研究测试数据至少需要 5 条，才能覆盖筛选器");
+assert(new Set(learning.map((item) => item.type)).size > 1, "学习研究测试数据需要包含多个类型");
+assert(
+  learning.every((item) => item.isExample === true),
+  "测试阶段的学习研究条目必须标记 isExample: true"
+);
 
 const html = source["index.html"];
 const htmlIds = [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
@@ -135,7 +141,7 @@ for (const requiredId of [
   "heroPrimaryCta",
   "profileFacts",
   "skillGroups",
-  "researchList",
+  "learningList",
   "personSchema"
 ]) {
   assert(htmlIds.includes(requiredId), `index.html 缺少渲染容器 #${requiredId}`);
@@ -150,6 +156,6 @@ if (failures.length) {
 }
 
 console.log(
-  `内容校验通过：${experience.length} 段经历、${research.length} 条成果、` +
+  `内容校验通过：${experience.length} 段经历、${learning.length} 条学习研究、` +
   `${skills.length} 个技能分组`
 );
