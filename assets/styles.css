@@ -127,6 +127,7 @@ img { max-width: 100%; display: block; }
 /* ---------- Nav ---------- */
 .nav {
   position: sticky; top: 0; z-index: 40;
+  background: var(--bg);
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -240,6 +241,7 @@ img { max-width: 100%; display: block; }
   position: absolute; top: -220px; right: -160px;
   width: 720px; height: 720px;
   border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-soft) 0%, transparent 62%);
   background: radial-gradient(circle,
     color-mix(in srgb, var(--accent) 12%, transparent) 0%,
     transparent 62%);
@@ -261,6 +263,7 @@ img { max-width: 100%; display: block; }
 .hero-status .dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
 }
 .hero h1 {
@@ -400,6 +403,7 @@ img { max-width: 100%; display: block; }
 }
 .exp-item.is-current::before {
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
 }
 .exp-item:hover::before { border-color: var(--accent); }
@@ -552,7 +556,8 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+  border: 1px solid var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 32%, transparent);
   border-radius: var(--radius-sm);
   padding: 1px 7px;
   background: var(--accent-soft);

@@ -15,6 +15,10 @@
                    value 里如需链接，填 href；不填则按纯文本渲染
      motto         职业理念，[{ key, value }]
      contact       页脚联系方式，{ intro, links: [{ label, href }] }
+     meta          SEO 与结构化数据字段
+
+   隐私约定：
+     电话只保存脱敏后的展示值，不在站点文件中保存完整号码。
    ========================================================================== */
 
 const PROFILE = {
@@ -44,9 +48,10 @@ const PROFILE = {
     { label: "Profession", value: "系统架构设计师（软考）" },
     { label: "Education",  value: "计算机软件 · 大专" },
     { label: "Language",   value: "中文 / 英语（可全英文沟通）" },
+    { label: "Phone",      value: "181****1287" },
     { label: "Email",      value: "itrice@live.cn",           href: "mailto:itrice@live.cn" },
     { label: "GitHub",     value: "github.com/itrice",        href: "https://github.com/itrice" },
-    { label: "Cnblogs",       value: "www.cnblogs.com/itrice",       href: "https://www.cnblogs.com/itrice" }
+    { label: "CSDN",       value: "me.csdn.net/iTrice",       href: "https://me.csdn.net/iTrice" }
   ],
 
   motto: [
@@ -61,6 +66,14 @@ const PROFILE = {
       { label: "EMAIL · itrice@live.cn", href: "mailto:itrice@live.cn" },
       { label: "GITHUB", href: "https://github.com/itrice" },
       { label: "CSDN",   href: "https://me.csdn.net/iTrice" }
+    ]
+  },
+
+  meta: {
+    description: "安仕平（Edwin），系统架构设计师、高级工程师、研发经理。16 年软件研发经验，主导十年老旧单体系统的微服务架构重构与端到端 CI/CD 体系建设。",
+    shareDescription: "16 年软件研发经验，专注系统架构设计、微服务重构与工程效能。",
+    knowsAbout: [
+      "系统架构设计", "微服务", ".NET Core", "DevOps", "CI/CD", "研发团队管理"
     ]
   }
 
