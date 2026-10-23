@@ -5,7 +5,8 @@
    页面会按 date 倒序展示；标题、摘要和标签应使用真实内容。
 
    字段说明：
-     id         唯一标识（英文 kebab-case）
+     id         唯一标识，使用 Number 或 UUID；对应图片放在
+                assets/learning/<id>/ 目录，便于随笔记同步清理
      title      标题
      type       类型：学习笔记 | 架构复盘 | 技术分享 | 开源实践 | 读书笔记
      date       日期，格式 "YYYY-MM" 或 "YYYY-MM-DD"
@@ -17,17 +18,17 @@
      highlights 关键收获字符串数组（可选）
      sections   分段笔记 [{ title, body }]（可选）
      screenshots 截图数组 [{ src, alt, caption, width, height }]（可选）
+                src 必须位于 assets/learning/<id>/ 目录
      isExample  是否为界面测试数据（正式内容应省略）
    ========================================================================== */
 
 const LEARNING = [
   {
-    id: "codex-deep-use-profile-site",
+    id: 202610220001,
     title: "深度使用 Codex 并完善个人网站",
     type: "学习笔记",
     date: "2026-10-22",
     venue: "Codex 实践",
-    authors: ["安仕平"],
     summary: "把 Codex 从代码问答工具进一步用于完整的前端维护流程：先理解现有静态站结构，再迁移内容数据、完成隐私脱敏和兼容性修复，最后通过桌面端与移动端实际渲染回归，形成可重复的实践闭环。",
     highlights: [
       "页面文案、个人信息、技能与学习研究统一迁移到 data 目录，建立单一数据源。",
@@ -51,14 +52,14 @@ const LEARNING = [
     ],
     screenshots: [
       {
-        src: "assets/learning/site-desktop.png",
+        src: "assets/learning/202610220001/site-desktop.png",
         alt: "桌面端个人主页首屏截图",
         caption: "桌面端首屏：保留白纸风格，同时验证信息层级与 CTA 布局。",
         width: 1425,
         height: 891
       },
       {
-        src: "assets/learning/site-mobile.png",
+        src: "assets/learning/202610220001/site-mobile.png",
         alt: "移动端个人主页首屏截图",
         caption: "移动端 375×667：检查导航收缩、正文换行和按钮可见性。",
         width: 360,

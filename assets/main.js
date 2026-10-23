@@ -348,10 +348,11 @@
     return String(date).replace(/-/g, '.');
   }
 
-  function isSafeLearningImage(src) {
-    return typeof src === 'string' &&
-      !src.includes('..') &&
-      /^assets\/learning\/[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(src);
+  function isSafeLearningImage(src, id) {
+    if (typeof src !== 'string' || src.includes('..')) return false;
+    var folder = 'assets/learning/' + String(id) + '/';
+    return src.indexOf(folder) === 0 &&
+      /^[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(src.slice(folder.length));
   }
 
   function buildCard(item, index) {
@@ -409,7 +410,7 @@
       ));
       var galleryGrid = el('div', 'learning-gallery');
       item.screenshots.forEach(function (screenshot) {
-        if (!screenshot || !isSafeLearningImage(screenshot.src)) return;
+        if (!screenshot || !isSafeLearningImage(screenshot.src, item.id)) return;
         var figure = el('figure', 'learning-shot');
         var link = el('a', 'learning-shot-link');
         link.href = screenshot.src;

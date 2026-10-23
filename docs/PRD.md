@@ -189,6 +189,7 @@
 
 ```json
 {
+  "id": 202610220001,
   "title": "标题",
   "type": "学习笔记 | 架构复盘 | 技术分享 | 开源实践 | 读书笔记",
   "date": "2026-10",
@@ -203,7 +204,7 @@
   ],
   "screenshots": [
     {
-      "src": "assets/learning/example.png",
+      "src": "assets/learning/202610220001/cover.png",
       "alt": "截图的替代文本",
       "caption": "截图说明",
       "width": 1440,
@@ -214,6 +215,9 @@
   "isExample": false
 }
 ```
+
+- `id` 只能是正整数或 UUID。
+- 所有图片必须位于 `assets/learning/<id>/`，确保删除笔记时可以同步删除对应资源目录。
 
 **展示规则**
 

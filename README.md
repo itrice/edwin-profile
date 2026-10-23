@@ -16,7 +16,7 @@
 | [index.html](index.html) | 单页主页语义结构与渲染容器 |
 | [assets/styles.css](assets/styles.css) | 全部样式与设计 token |
 | [assets/main.js](assets/main.js) | 数据渲染、导航、滚动进度、筛选与动画 |
-| [assets/learning/](assets/learning/) | 学习研究截图；点击缩略图可查看原图 |
+| [assets/learning/](assets/learning/) | 学习研究截图；每个笔记使用与 ID 同名的独立目录 |
 | [data/profile.js](data/profile.js) | 个人信息、职业理念、联系方式与 SEO 字段 |
 | [data/experience.js](data/experience.js) | 工作经历 |
 | [data/skills.js](data/skills.js) | 技术能力分组 |
@@ -112,7 +112,7 @@ const PROFILE = {
 
 ```js
 {
-  id: "microservice-migration",
+  id: 202610220002,
   title: "十年单体系统的微服务迁移实践",
   type: "学习笔记",
   date: "2026-10",
@@ -128,7 +128,7 @@ const PROFILE = {
   ],
   screenshots: [
     {
-      src: "assets/learning/example.png",
+      src: "assets/learning/202610220002/cover.png",
       alt: "截图的替代文本",
       caption: "截图说明",
       width: 1440,
@@ -143,7 +143,13 @@ const PROFILE = {
 
 当前文件已加入 2026-10-22 的 Codex 实践学习记录。正式内容不应设置 `isExample: true`，内容校验会拒绝带该标记的正式数据；如需临时造数，应同时调整校验规则，并在上线前移除测试记录。
 
-学习笔记支持 `highlights`、分段正文 `sections` 和 `screenshots`。截图必须放在 `assets/learning/`，提供 `alt`、说明及原始宽高；页面会延迟加载缩略图，点击后在新标签页打开原图。
+学习笔记支持 `highlights`、分段正文 `sections` 和 `screenshots`。
+
+- `id` 使用正整数或 UUID，不能使用普通描述性字符串。
+- 图片目录必须为 `assets/learning/<id>/`，例如当前笔记使用 `assets/learning/202610220001/`。
+- 删除笔记时，删除 `LEARNING` 中的对象以及同名图片目录即可。
+- 截图需提供 `alt`、说明及原始宽高；页面会延迟加载缩略图，点击后在新标签页打开原图。
+- 内容校验会检查图片路径、目录与 ID 的对应关系，并拦截孤立图片目录。
 
 ### 导航与页面文案
 

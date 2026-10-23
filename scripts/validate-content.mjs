@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
@@ -32,6 +32,14 @@ function unique(values, label) {
 
 function safeUrl(url) {
   return /^(#|https?:\/\/|mailto:)/i.test(url);
+}
+
+function isValidLearningId(id) {
+  return (
+    (typeof id === "number" && Number.isSafeInteger(id) && id > 0) ||
+    (typeof id === "string" &&
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))
+  );
 }
 
 const sourceFiles = [
@@ -108,6 +116,10 @@ for (const job of experience) {
 for (const item of learning) {
   assert(item.id && item.title && item.type && item.date, "学习研究缺少 id/title/type/date");
   assert(
+    isValidLearningId(item.id),
+    `学习研究 ${item.id} 的 id 必须是正整数或 UUID`
+  );
+  assert(
     /^\d{4}-\d{2}(?:-\d{2})?$/.test(item.date),
     `学习研究 ${item.id} 的日期格式无效`
   );
@@ -125,12 +137,16 @@ for (const item of learning) {
   }
   if (item.screenshots != null) {
     assert(Array.isArray(item.screenshots), `学习研究 ${item.id} 的 screenshots 必须是数组`);
+    const screenshotFolder = `assets/learning/${item.id}/`;
     for (const screenshot of item.screenshots) {
       assert(screenshot.src && screenshot.alt, `学习研究 ${item.id} 的截图缺少 src 或 alt`);
       assert(
-        /^assets\/learning\/[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(screenshot.src) &&
+        screenshot.src.startsWith(screenshotFolder) &&
+          /^[a-z0-9/_-]+\.(?:png|jpe?g|webp)$/i.test(
+            screenshot.src.slice(screenshotFolder.length)
+          ) &&
           !screenshot.src.includes(".."),
-        `学习研究 ${item.id} 的截图路径不安全`
+        `学习研究 ${item.id} 的截图必须位于 ${screenshotFolder}`
       );
       assert(
         existsSync(resolve(root, screenshot.src)),
@@ -144,6 +160,21 @@ for (const item of learning) {
   }
 }
 for (const link of site.navLinks) dataUrls.push(link.href);
+
+const learningIds = new Set(learning.map((item) => String(item.id)));
+const learningAssetsRoot = resolve(root, "assets/learning");
+if (existsSync(learningAssetsRoot)) {
+  for (const entry of readdirSync(learningAssetsRoot, { withFileTypes: true })) {
+    assert(
+      entry.isDirectory(),
+      `学习图片必须放入以笔记 ID 命名的目录：assets/learning/${entry.name}/`
+    );
+    assert(
+      learningIds.has(entry.name),
+      `发现没有对应学习笔记的图片目录：assets/learning/${entry.name}/`
+    );
+  }
+}
 
 assert(
   dataUrls.every((url) => typeof url === "string" && safeUrl(url)),
